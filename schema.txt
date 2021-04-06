@@ -15,20 +15,6 @@ CREATE SCHEMA IF NOT EXISTS `simple_company` DEFAULT CHARACTER SET utf8 ;
 USE `simple_company` ;
 
 -- -----------------------------------------------------
--- Table `simple_company`.`product`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`PRODUCT` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `prod_name` VARCHAR(45) NOT NULL,
-  `prod_desc` VARCHAR(1024) NOT NULL,
-  `prod_category` INT NOT NULL,
-  `prod_upc` CHAR(12) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `simple_company`.`customer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `simple_company`.`CUSTOMER` (
@@ -42,6 +28,55 @@ CREATE TABLE IF NOT EXISTS `simple_company`.`CUSTOMER` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `simple_company`.`address`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `simple_company`.`ADDRESS` (
+  `address1` VARCHAR(45) NOT NULL,
+  `address2` VARCHAR(45) NULL,
+  `city` VARCHAR(45) NOT NULL,
+  `state` VARCHAR(45) NOT NULL,
+  `zipcode` VARCHAR(45) NOT NULL,
+  `CUSTOMER_id` INT NOT NULL,
+  CONSTRAINT `fk_ADDRESS_CUSTOMER1`
+    FOREIGN KEY (`CUSTOMER_id`)
+    REFERENCES `simple_company`.`CUSTOMER` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `simple_company`.`credit_card`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `simple_company`.`CREDIT_CARD` (
+  `name` VARCHAR(45) NOT NULL,
+  `cc_number` VARCHAR(45) NOT NULL,
+  `exp_date` VARCHAR(45) NOT NULL,
+  `security_code` VARCHAR(45) NOT NULL,
+  `CUSTOMER_id` INT NOT NULL,
+  INDEX `fk_CREDIT_CARD_CUSTOMER1_idx` (`CUSTOMER_id` ASC),
+  CONSTRAINT `fk_CREDIT_CARD_CUSTOMER1`
+    FOREIGN KEY (`CUSTOMER_id`)
+    REFERENCES `simple_company`.`CUSTOMER` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `simple_company`.`product`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `simple_company`.`PRODUCT` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `prod_name` VARCHAR(45) NOT NULL,
+  `prod_desc` VARCHAR(1024) NOT NULL,
+  `prod_category` INT NOT NULL,
+  `prod_upc` CHAR(12) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -70,40 +105,6 @@ CREATE TABLE IF NOT EXISTS `simple_company`.`PURCHASE` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `simple_company`.`address`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`ADDRESS` (
-  `address1` VARCHAR(45) NOT NULL,
-  `address2` VARCHAR(45) NULL,
-  `city` VARCHAR(45) NOT NULL,
-  `state` VARCHAR(45) NOT NULL,
-  `zipcode` VARCHAR(45) NOT NULL,
-  `CUSTOMER_id` INT NOT NULL,
-  CONSTRAINT `fk_ADDRESS_CUSTOMER1`
-    FOREIGN KEY (`CUSTOMER_id`)
-    REFERENCES `simple_company`.`CUSTOMER` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `simple_company`.`credit_card`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`CREDIT_CARD` (
-  `name` VARCHAR(45) NOT NULL,
-  `cc_number` VARCHAR(45) NOT NULL,
-  `exp_date` VARCHAR(45) NOT NULL,
-  `security_code` VARCHAR(45) NOT NULL,
-  `CUSTOMER_id` INT NOT NULL,
-  INDEX `fk_CREDIT_CARD_CUSTOMER1_idx` (`CUSTOMER_id` ASC),
-  CONSTRAINT `fk_CREDIT_CARD_CUSTOMER1`
-    FOREIGN KEY (`CUSTOMER_id`)
-    REFERENCES `simple_company`.`CUSTOMER` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
