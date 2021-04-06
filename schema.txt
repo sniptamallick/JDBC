@@ -24,8 +24,7 @@ CREATE TABLE IF NOT EXISTS `simple_company`.`product` (
   `prod_category` INT NOT NULL,
   `prod_upc` CHAR(12) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `prod_upc_UNIQUE` (`prod_upc` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
