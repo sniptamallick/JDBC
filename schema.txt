@@ -17,21 +17,21 @@ USE `simple_company` ;
 -- -----------------------------------------------------
 -- Table `simple_company`.`product`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`product` (
+CREATE TABLE IF NOT EXISTS `simple_company`.`PRODUCT` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `prod_name` VARCHAR(45) NOT NULL,
   `prod_desc` VARCHAR(1024) NOT NULL,
   `prod_category` INT NOT NULL,
   `prod_upc` CHAR(12) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `simple_company`.`customer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`customer` (
+CREATE TABLE IF NOT EXISTS `simple_company`.`CUSTOMER` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
@@ -39,15 +39,15 @@ CREATE TABLE IF NOT EXISTS `simple_company`.`customer` (
   `dob` DATE NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `simple_company`.`purchase`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`purchase` (
+CREATE TABLE IF NOT EXISTS `simple_company`.`PURCHASE` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `purchase_date` TIMESTAMP NOT NULL,
   `purchase_amt` DECIMAL(9,2) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `simple_company`.`purchase` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_PURCHASE_CUSTOMER1`
     FOREIGN KEY (`CUSTOMER_id`)
-    REFERENCES `simple_company`.`customer` (`id`)
+    REFERENCES `simple_company`.`CUSTOMER` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -73,7 +73,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `simple_company`.`address`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`address` (
+CREATE TABLE IF NOT EXISTS `simple_company`.`ADDRESS` (
   `address1` VARCHAR(45) NOT NULL,
   `address2` VARCHAR(45) NULL,
   `city` VARCHAR(45) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `simple_company`.`address` (
   `CUSTOMER_id` INT NOT NULL,
   CONSTRAINT `fk_ADDRESS_CUSTOMER1`
     FOREIGN KEY (`CUSTOMER_id`)
-    REFERENCES `simple_company`.`customer` (`id`)
+    REFERENCES `simple_company`.`CUSTOMER` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -91,7 +91,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `simple_company`.`credit_card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `simple_company`.`credit_card` (
+CREATE TABLE IF NOT EXISTS `simple_company`.`CREDIT_CARD` (
   `name` VARCHAR(45) NOT NULL,
   `cc_number` VARCHAR(45) NOT NULL,
   `exp_date` VARCHAR(45) NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `simple_company`.`credit_card` (
   INDEX `fk_CREDIT_CARD_CUSTOMER1_idx` (`CUSTOMER_id` ASC),
   CONSTRAINT `fk_CREDIT_CARD_CUSTOMER1`
     FOREIGN KEY (`CUSTOMER_id`)
-    REFERENCES `simple_company`.`customer` (`id`)
+    REFERENCES `simple_company`.`CUSTOMER` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
